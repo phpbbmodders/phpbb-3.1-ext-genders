@@ -80,7 +80,7 @@ class listener implements EventSubscriberInterface
 	*/
 	public function user_gender_profile($event)
 	{
-		$this->user->add_lang_ext('phpbbmodders/genders', 'genders');	
+		$this->user->add_lang_ext('phpbbmodders/genders', 'genders');
 		// Request the user option vars and add them to the data array
 		$event['data'] = array_merge($event['data'], array(
 			'user_gender'	=> $this->request->variable('user_gender', $this->user->data['user_gender']),
@@ -100,7 +100,6 @@ class listener implements EventSubscriberInterface
 			//todo ensure gender is validated
 			$array[] = '';
 			$event['error'] = $array;
-		}
 	}
 
 	/**
