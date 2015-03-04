@@ -3,7 +3,7 @@ phpbb-3.1-ext-genders
 
 phpBB 3.1 extension which allows users to be able to choose a gender.  Gender display on memberlist and viewtopic.
 
-[![Build Status](https://travis-ci.org/phpbbmodders/phpBB-3.1-ext-genders.svg?branch=master)](https://travis-ci.org/phpbbmodders/phpBB-3.1-ext-genders)
+[![Build Status](https://travis-ci.org/phpbbmodders/phpbb-3.1-ext-genders.svg?branch=master)](https://travis-ci.org/phpbbmodders/phpbb-3.1-ext-genders)
 ## Installation
 
 ### 1. clone
