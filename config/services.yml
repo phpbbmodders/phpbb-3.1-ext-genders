@@ -1,0 +1,10 @@
+phpbbmodders.genders.listener:
+    class: phpbbmodders\genders\event\listener
+    arguments:
+        - @request
+        - @template
+        - @user
+        - %core.root_path%
+        - %core.php_ext%
+        tags:
+        - { name: event.listener }
