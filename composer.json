@@ -1,0 +1,28 @@
+{
+	"name": "phpbbmodders/phpbb-3.1-ext-genders",
+	"type": "phpbb-extension",
+	"description": "This MOD will allow your members to specify their Gender. They can chose between "Male", "Female" and "None specified".",
+	"version": "1.0.0",
+	"time": "2015-02-09",
+	"keywords": ["phpbb", "extension", "genders", "male", "female", "communication"],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Rich McGirr",
+			"email": "rmcgirr83@phpbbmodders.net",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.3.3"
+	},
+	"require-dev": {
+		"phpbb/epv": "dev-master"
+	},
+	"extra": {
+		"display-name": "Genders",
+		"soft-require": {
+			"phpbb/phpbb": ">=3.1.4-RC1,<3.2.*@dev"
+		}
+	}
+}
