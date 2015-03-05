@@ -37,7 +37,7 @@ class m1_initial_schema extends \phpbb\db\migration\migration
 		return array(
 			'drop_columns' => array(
 				$this->table_prefix . 'users'	=> array(
-					'user_flag',
+					'user_gender',
 				),
 			),
 		);

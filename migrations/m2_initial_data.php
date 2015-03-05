@@ -25,5 +25,6 @@ class m2_initial_data extends \phpbb\db\migration\migration
 	{
 		return array(
 			array('config.add', array('genders_version', '1.0.0')),
+		);
 	}
 }

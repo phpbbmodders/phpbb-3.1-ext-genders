@@ -35,18 +35,27 @@ class listener implements EventSubscriberInterface
 	/** @var string phpEx */
 	protected $php_ext;
 
+	/**
+	* the path to the images directory
+	*
+	*@var string
+	*/
+	protected $genders_path;
+
 	public function __construct(
 			\phpbb\request\request $request,
 			\phpbb\template\template $template,
 			\phpbb\user $user,
 			$phpbb_root_path,
-			$php_ext)
+			$php_ext,
+			$genders_path)
 	{
 		$this->request = $request;
 		$this->template = $template;
 		$this->user = $user;
 		$this->root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
+		$this->images_path = $genders_path;
 	}
 
 	/**
@@ -80,10 +89,23 @@ class listener implements EventSubscriberInterface
 	*/
 	public function user_gender_profile($event)
 	{
-		$this->user->add_lang_ext('phpbbmodders/genders', 'genders');
 		// Request the user option vars and add them to the data array
 		$event['data'] = array_merge($event['data'], array(
-			'user_gender'	=> $this->request->variable('user_gender', $this->user->data['user_gender']),
+			'user_gender'	=> $this->request->variable('gender', $this->user->data['user_gender']),
+		));
+
+		$this->user->add_lang_ext('phpbbmodders/genders', 'genders');
+
+		$this->define_constants();
+
+		$this->template->assign_vars(array(
+			'GENDER_X'		=> GENDER_X,
+			'GENDER_M'		=> GENDER_M,
+			'GENDER_F'		=> GENDER_F,
+
+			'S_GENDER_X'	=> ($event['data']['user_gender'] == GENDER_X) ? true : false,
+			'S_GENDER_M'	=> ($event['data']['user_gender'] == GENDER_M) ? true : false,
+			'S_GENDER_F'	=> ($event['data']['user_gender'] == GENDER_F) ? true : false,
 		));
 	}
 
@@ -97,9 +119,16 @@ class listener implements EventSubscriberInterface
 	public function user_gender_profile_validate($event)
 	{
 			$array = $event['error'];
-			//todo ensure gender is validated
-			$array[] = '';
-			$event['error'] = $array;
+			//ensure gender is validated
+			if (!function_exists('validate_data'))
+			{
+				include($this->root_path . 'includes/functions_user.' . $this->php_ext);
+			}
+			$validate_array = array(
+				'user_gender'	=> array('num', true, 0, 2),
+			);
+			$error = validate_data($event['data'], $validate_array);
+			$event['error'] = array_merge($array, $error);
 	}
 
 	/**
@@ -140,7 +169,7 @@ class listener implements EventSubscriberInterface
 	public function viewtopic_cache_guest_data($event)
 	{
 		$array = $event['user_cache_data'];
-		$array['user_gender'] = '';
+		$array['user_gender'] = 0;
 		$event['user_cache_data'] = $array;
 	}
 
@@ -153,7 +182,8 @@ class listener implements EventSubscriberInterface
 	*/
 	public function viewtopic_modify_post_row($event)
 	{
-		//todo generate the image
+		$gender = $this->get_user_gender($event['user_poster_data']['user_gender']);
+
 		$event['post_row'] = array_merge($event['post_row'],array(
 			'USER_GENDER' => $gender,
 		));
@@ -170,11 +200,10 @@ class listener implements EventSubscriberInterface
 	{
 		if (!empty($event['member']['user_gender']))
 		{
-			$this->user->add_lang_ext('phpbbmodders/genders', 'genders');
+			$gender = $this->get_user_gender($event['member']['user_gender']);
 
 			$this->template->assign_vars(array(
 				'USER_GENDER'	=> $gender,
-				'S_GENDER'		=> true,
 			));
 		}
 	}
@@ -202,12 +231,66 @@ class listener implements EventSubscriberInterface
 	*/
 	public function search_modify_tpl_ary($event)
 	{
-		$array = $event['tpl_ary'];
+		if ($event['show_results'] == 'topics')
+		{
+			return;
+		}
 
+		$array = $event['tpl_ary'];
+		$gender = $this->get_user_gender($event['row']['user_gender']);
 		$array = array_merge($array, array(
 			'USER_GENDER'	=> $gender,
 		));
 
 		$event['tpl_ary'] = $array;
+	}
+
+	/**
+	 * Get user gender
+	 *
+	 * @author RMcGirr83
+	 * @author eviL3
+	 * @param int $user_gender User's gender
+	 * @return string Gender image
+	 */
+	private function get_user_gender($user_gender)
+	{
+		$this->user->add_lang_ext('phpbbmodders/genders', 'genders');
+
+		$this->define_constants();
+
+		switch ($user_gender)
+		{
+			case GENDER_M:
+				$gender = 'gender_m';
+			break;
+
+			case GENDER_F:
+				$gender = 'gender_f';
+			break;
+
+			default:
+				$gender = 'gender_x';
+		}
+
+		$gender = '<img src="' . htmlspecialchars($this->root_path) . htmlspecialchars($this->images_path) . 'icon_' . $gender . '.gif" alt="' . $this->user->lang[strtoupper($gender)] . '" title="' . $this->user->lang[strtoupper($gender)] . '" />';
+
+		return $gender;
+	}
+
+	/**
+	* Set up the constants
+	*
+	* @return null
+	* @access private
+	*/
+	private function define_constants()
+	{
+		if (!defined('GENDER_F'))
+		{
+			define('GENDER_F', 2); // Ladies first ;)
+			define('GENDER_X', 0);
+			define('GENDER_M', 1);
+		}
 	}
 }

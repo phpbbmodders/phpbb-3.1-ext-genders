@@ -1,10 +1,15 @@
-phpbbmodders.genders.listener:
-    class: phpbbmodders\genders\event\listener
-    arguments:
-        - @request
-        - @template
-        - @user
-        - %core.root_path%
-        - %core.php_ext%
+imports:
+    - { resource: genderspath.yml }
+
+services:
+    phpbbmodders.genders.listener:
+        class: phpbbmodders\genders\event\listener
+        arguments:
+            - @request
+            - @template
+            - @user
+            - %core.root_path%
+            - %core.php_ext%
+            - %phpbbmodders.genders.imagepath%
         tags:
-        - { name: event.listener }
+            - { name: event.listener }

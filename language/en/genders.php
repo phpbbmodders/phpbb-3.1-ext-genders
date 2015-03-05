@@ -32,8 +32,9 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'GENDER'			=> 'Gender',
-	'GENDER_EXPLAIN'	=> 'Please enter your gender here.',
 	'GENDER_X'			=> 'None specified',
 	'GENDER_M'			=> 'Male',
 	'GENDER_F'			=> 'Female',
+	'TOO_LARGE_USER_GENDER'	=> 'Gender value is too large.',
+	'TOO_SMALL_USER_GENDER'	=> 'Gender value is too small.',
 ));
