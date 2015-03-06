@@ -20,6 +20,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 */
 class listener implements EventSubscriberInterface
 {
+	/**
+	* define our constants
+	**/
+	CONST GENDER_F = 2; // ladies first ;)
+	CONST GENDER_M = 1;
+	CONST GENDER_X = 0;
+
 	/** @var \phpbb\request\request */
 	protected $request;
 
@@ -95,17 +102,15 @@ class listener implements EventSubscriberInterface
 		));
 
 		$this->user->add_lang_ext('phpbbmodders/genders', 'genders');
-
-		$this->define_constants();
-
+		
 		$this->template->assign_vars(array(
-			'GENDER_X'		=> GENDER_X,
-			'GENDER_M'		=> GENDER_M,
-			'GENDER_F'		=> GENDER_F,
+			'GENDER_X'		=> self::GENDER_X,
+			'GENDER_M'		=> self::GENDER_M,
+			'GENDER_F'		=> self::GENDER_F,
 
-			'S_GENDER_X'	=> ($event['data']['user_gender'] == GENDER_X) ? true : false,
-			'S_GENDER_M'	=> ($event['data']['user_gender'] == GENDER_M) ? true : false,
-			'S_GENDER_F'	=> ($event['data']['user_gender'] == GENDER_F) ? true : false,
+			'S_GENDER_X'	=> ($event['data']['user_gender'] == self::GENDER_X) ? true : false,
+			'S_GENDER_M'	=> ($event['data']['user_gender'] == self::GENDER_M) ? true : false,
+			'S_GENDER_F'	=> ($event['data']['user_gender'] == self::GENDER_F) ? true : false,
 		));
 	}
 
@@ -257,15 +262,13 @@ class listener implements EventSubscriberInterface
 	{
 		$this->user->add_lang_ext('phpbbmodders/genders', 'genders');
 
-		$this->define_constants();
-
 		switch ($user_gender)
 		{
-			case GENDER_M:
+			case self::GENDER_M:
 				$gender = 'gender_m';
 			break;
 
-			case GENDER_F:
+			case self::GENDER_F:
 				$gender = 'gender_f';
 			break;
 
@@ -276,21 +279,5 @@ class listener implements EventSubscriberInterface
 		$gender = '<img src="' . htmlspecialchars($this->root_path) . htmlspecialchars($this->images_path) . 'icon_' . $gender . '.gif" alt="' . $this->user->lang[strtoupper($gender)] . '" title="' . $this->user->lang[strtoupper($gender)] . '" />';
 
 		return $gender;
-	}
-
-	/**
-	* Set up the constants
-	*
-	* @return null
-	* @access private
-	*/
-	private function define_constants()
-	{
-		if (!defined('GENDER_F'))
-		{
-			define('GENDER_F', 2); // Ladies first ;)
-			define('GENDER_X', 0);
-			define('GENDER_M', 1);
-		}
 	}
 }
