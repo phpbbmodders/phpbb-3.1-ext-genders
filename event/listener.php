@@ -50,12 +50,12 @@ class listener implements EventSubscriberInterface
 	protected $genders_path;
 
 	public function __construct(
-			\phpbb\request\request $request,
-			\phpbb\template\template $template,
-			\phpbb\user $user,
-			$phpbb_root_path,
-			$php_ext,
-			$genders_path)
+		\phpbb\request\request $request,
+		\phpbb\template\template $template,
+		\phpbb\user $user,
+		$phpbb_root_path,
+		$php_ext,
+		$genders_path)
 	{
 		$this->request = $request;
 		$this->template = $template;
