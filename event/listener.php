@@ -23,9 +23,9 @@ class listener implements EventSubscriberInterface
 	/**
 	* define our constants
 	**/
-	CONST GENDER_F = 2; // ladies first ;)
-	CONST GENDER_M = 1;
-	CONST GENDER_X = 0;
+	const GENDER_F = 2; // ladies first ;)
+	const GENDER_M = 1;
+	const GENDER_X = 0;
 
 	/** @var \phpbb\request\request */
 	protected $request;
@@ -102,7 +102,7 @@ class listener implements EventSubscriberInterface
 		));
 
 		$this->user->add_lang_ext('phpbbmodders/genders', 'genders');
-		
+
 		$this->template->assign_vars(array(
 			'GENDER_X'		=> self::GENDER_X,
 			'GENDER_M'		=> self::GENDER_M,
