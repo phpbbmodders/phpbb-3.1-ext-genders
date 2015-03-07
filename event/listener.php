@@ -78,6 +78,9 @@ class listener implements EventSubscriberInterface
 			'core.ucp_profile_modify_profile_info'		=> 'user_gender_profile',
 			'core.ucp_profile_validate_profile_info'	=> 'user_gender_profile_validate',
 			'core.ucp_profile_info_modify_sql_ary'		=> 'user_gender_profile_sql',
+			'core.acp_users_modify_profile'				=> 'user_gender_profile',
+			'core.acp_users_profile_validate'			=> 'user_gender_profile_validate',
+			'core.acp_users_profile_modify_sql_ary'		=> 'user_gender_profile_sql',
 			'core.viewtopic_cache_user_data'			=> 'viewtopic_cache_user_data',
 			'core.viewtopic_cache_guest_data'			=> 'viewtopic_cache_guest_data',
 			'core.viewtopic_modify_post_row'			=> 'viewtopic_modify_post_row',
@@ -203,14 +206,11 @@ class listener implements EventSubscriberInterface
 	*/
 	public function memberlist_view_profile($event)
 	{
-		if (!empty($event['member']['user_gender']))
-		{
-			$gender = $this->get_user_gender($event['member']['user_gender']);
+		$gender = $this->get_user_gender($event['member']['user_gender']);
 
-			$this->template->assign_vars(array(
-				'USER_GENDER'	=> $gender,
-			));
-		}
+		$this->template->assign_vars(array(
+			'USER_GENDER'	=> $gender,
+		));
 	}
 
 	/**
@@ -276,7 +276,7 @@ class listener implements EventSubscriberInterface
 				$gender = 'gender_x';
 		}
 
-		$gender = '<img src="' . htmlspecialchars($this->root_path) . htmlspecialchars($this->images_path) . 'icon_' . $gender . '.gif" alt="' . $this->user->lang[strtoupper($gender)] . '" title="' . $this->user->lang[strtoupper($gender)] . '" />';
+		$gender = '<img src="' . htmlspecialchars($this->root_path) . htmlspecialchars($this->images_path) . 'icon_' . $gender . '.gif" alt="' . $this->user->lang[strtoupper($gender)] . '" title="' . $this->user->lang[strtoupper($gender)] . '" style="vertical-align:middle;" />';
 
 		return $gender;
 	}
