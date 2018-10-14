@@ -1,28 +1,36 @@
 {
-	"name": "phpbbmodders/genders",
-	"type": "phpbb-extension",
-	"description": "This MOD will allow your members to specify their Gender. They can chose between Male, Female and None specified.",
-	"version": "1.0.0",
-	"time": "2015-02-09",
-	"keywords": ["phpbb", "extension", "genders", "male", "female", "communication"],
-	"license": "GPL-2.0",
-	"authors": [
-		{
-			"name": "Rich McGirr",
-			"email": "rmcgirr83@phpbbmodders.net",
-			"role": "Developer"
-		}
-	],
-	"require": {
-		"php": ">=5.3.3"
-	},
-	"require-dev": {
-		"phpbb/epv": "dev-master"
-	},
-	"extra": {
-		"display-name": "Genders",
-		"soft-require": {
-			"phpbb/phpbb": ">=3.1.4-RC1,<3.2.*@dev"
-		}
-	}
+    "name": "rmcgirr83/genders",
+    "type": "phpbb-extension",
+    "description": "This Extension will allow your members to specify their Gender using fontawesome gender icons.",
+    "version": "1.1.1",
+    "time": "2017-01-09",
+    "keywords": [
+        "phpbb",
+        "extension",
+        "genders",
+        "communication"
+    ],
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Rich McGirr",
+            "email": "rmcgirr83@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "phpbb/phpbb": ">=3.1.4-RC1"
+    },
+    "extra": {
+        "display-name": "Genders",
+        "soft-require": {
+            "phpbb/phpbb": ">=3.1.4-RC1"
+        },
+        "version-check": {
+            "host": "www.phpbb.com",
+            "directory": "/customise/db/extension/phpbb_3.1_genders",
+            "filename": "version_check"
+        }
+    }
 }

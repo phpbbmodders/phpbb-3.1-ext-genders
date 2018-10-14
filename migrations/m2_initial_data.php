@@ -7,7 +7,7 @@
 *
 */
 
-namespace phpbbmodders\genders\migrations;
+namespace rmcgirr83\genders\migrations;
 
 class m2_initial_data extends \phpbb\db\migration\migration
 {
@@ -18,7 +18,7 @@ class m2_initial_data extends \phpbb\db\migration\migration
 
 	static public function depends_on()
 	{
-		return array('\phpbbmodders\genders\migrations\m1_initial_schema');
+		return array('\rmcgirr83\genders\migrations\m1_initial_schema');
 	}
 
 	public function update_data()

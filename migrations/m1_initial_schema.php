@@ -7,7 +7,7 @@
 *
 */
 
-namespace phpbbmodders\genders\migrations;
+namespace rmcgirr83\genders\migrations;
 
 class m1_initial_schema extends \phpbb\db\migration\migration
 {

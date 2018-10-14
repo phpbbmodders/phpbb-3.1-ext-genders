@@ -7,7 +7,7 @@
 *
 */
 
-namespace phpbbmodders\genders;
+namespace rmcgirr83\genders;
 
 /**
 * Extension class for custom enable/disable/purge actions
