@@ -15,14 +15,45 @@ namespace rmcgirr83\genders;
 class ext extends \phpbb\extension\base
 {
 	/**
-	* Enable extension if phpBB version requirement is met
-	*
-	* @return bool
-	* @access public
-	*/
+	 * Check whether the extension can be enabled.
+	 * The current phpBB and PHP version should meet or
+	 * exceed the minimum version required by this extension:
+	 *
+	 * @return bool|array
+	 * @access public
+	 */
 	public function is_enableable()
 	{
-		$config = $this->container->get('config');
-		return version_compare($config['version'], '3.1.4-RC1', '>=');
+		$enableable = $this->check_phpbb_version() && $this->check_php_version();
+
+		if (!$enableable)
+		{
+			$language = $this->container->get('language');
+			$language->add_lang('genders_install', 'rmcgirr83/genders');
+
+			return $language->lang('GENDERS_NOT_ENABLEABLE');
+		}
+
+		return $enableable;
+	}
+
+	/**
+	 * Require phpBB 3.3.19 due to several security fixes in the phpBB software.
+	 *
+	 * @return bool
+	 */
+	protected function check_phpbb_version()
+	{
+		return phpbb_version_compare(PHPBB_VERSION, '3.3.19', '>=');
+	}
+
+	/**
+	 * Requires PHP 8.3.36 due to security fixes.
+	 *
+	 * @return bool
+	 */
+	protected function check_php_version()
+	{
+		return PHP_VERSION_ID >= 80336;
 	}
 }
